@@ -1,11 +1,12 @@
 const gameBoard = (function () {
-    let board = [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', ''],
-    ];
+    const board = ['', '', '', '', '', '', '', '', ''];
 
     const getBoard = () => board;
-    const setMarker = (row, col, marker) => (board[row][col] = marker);
+    const setMarker = (index, marker) => (board[index] = marker);
     return { getBoard, setMarker };
 })();
+
+function createPlayer(marker) {
+    const getMarker = () => marker;
+    return { getMarker };
+}
