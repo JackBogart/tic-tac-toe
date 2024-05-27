@@ -1,6 +1,19 @@
 .board {
     display: grid;
-    height: clamp(200px, 60vw, 800px);
-    width: clamp(200px, 60vw, 800px);
+    height: clamp(200px, 60vw, 700px);
+    width: clamp(200px, 60vw, 700px);
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+h1 {
+    background-color: hsl(286, 100%, 22%);
+    margin: 0px;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: hsl(286, 100%, 22%);
 }
