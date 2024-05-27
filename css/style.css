@@ -1,0 +1,6 @@
+.board {
+    display: grid;
+    height: clamp(200px, 60vw, 800px);
+    width: clamp(200px, 60vw, 800px);
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
