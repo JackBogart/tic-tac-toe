@@ -1,9 +1,9 @@
 const gameBoard = (function () {
     const board = ['', '', '', '', '', '', '', '', ''];
 
-    const getBoard = () => board;
+    const getCell = (index) => board[index];
     const setMarker = (index, marker) => (board[index] = marker);
-    return { getBoard, setMarker };
+    return { getCell, setMarker };
 })();
 
 function createPlayer(marker) {
@@ -16,6 +16,7 @@ const gameController = (function () {
     const player2 = createPlayer('O');
     let isOver = false;
     let currentPlayer = player1;
+    let result = '';
 
     const winStates = [
         [0, 1, 2],
@@ -32,26 +33,27 @@ const gameController = (function () {
 
     const selectCell = (index) => {
         if (isOver) return; // Current game has finished
-        if (gameBoard.getBoard()[index] != '') return;
+        if (gameBoard.getCell(index) != '') return;
         gameBoard.setMarker(index, currentPlayer.getMarker());
 
         if (checkForWin()) {
             isOver = true;
-            console.log(`${currentPlayer.getMarker()} has won`);
+            console.log(`Player ${currentPlayer.getMarker()} has won!`);
+            result = `Player ${currentPlayer.getMarker()} has won!`;
         } else if (isATie()) {
             isOver = true;
-            console.log(`No moves remaining, tie!`);
+            console.log(`It's a draw!`);
+            result = `It's a draw!`;
         } else {
             currentPlayer = currentPlayer === player1 ? player2 : player1;
         }
     };
 
     const checkForWin = () => {
-        board = gameBoard.getBoard();
         currentMarker = currentPlayer.getMarker();
 
         for (const winState of winStates) {
-            if (winState.every((index) => board[index] === currentMarker)) {
+            if (winState.every((index) => gameBoard.getCell(index) === currentMarker)) {
                 return true;
             }
         }
@@ -59,14 +61,38 @@ const gameController = (function () {
     };
 
     const isATie = () => {
-        board = gameBoard.getBoard();
-
         for (let i = 0; i < 9; i++) {
-            if (board[i] === '') return false;
+            if (gameBoard.getCell(i) === '') return false;
         }
 
         return true;
     };
 
-    return { selectCell, getCurrentPlayer };
+    const isGameOver = () => isOver;
+    const getResult = () => result;
+
+    return { selectCell, getCurrentPlayer, isGameOver, getResult };
+})();
+
+const displayController = (function () {
+    const cells = document.querySelectorAll('.cell');
+    const gameState = document.querySelector('.game-state');
+
+    const updateBoard = () => {
+        for (const [index, cell] of cells.entries()) {
+            cell.textContent = gameBoard.getCell(index);
+        }
+        if (gameController.isGameOver()) {
+            gameState.textContent = gameController.getResult();
+        } else {
+            gameState.textContent = `Player ${gameController.getCurrentPlayer()}'s Turn!`;
+        }
+    };
+
+    cells.forEach((cell) => {
+        cell.addEventListener('click', () => {
+            gameController.selectCell(cell.dataset.index);
+            updateBoard();
+        });
+    });
 })();
