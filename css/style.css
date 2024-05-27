@@ -1,19 +1,54 @@
-.board {
-    display: grid;
-    height: clamp(200px, 60vw, 700px);
-    width: clamp(200px, 60vw, 700px);
-    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+body {
+	background-color: hsl(0, 0%, 9%);
+	color: white;
+	font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol';
 }
 
 h1 {
-    background-color: hsl(286, 100%, 22%);
-    margin: 0px;
-    text-align: center;
+	background-color: #9333ea;
+	margin: 0px;
+	text-align: center;
+	font-size: 4rem;
+	padding: 20px 0px;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: hsl(286, 100%, 22%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.game-state {
+	font-size: 2rem;
+}
+
+.board {
+	display: grid;
+	height: clamp(300px, 40vw, 700px);
+	width: clamp(300px, 40vw, 700px);
+	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+	border: 2px solid rgb(255, 255, 255);
+}
+
+.cell {
+	background-color: hsl(0, 0%, 15%);
+	color: white;
+	border: none;
+	border-right: 2px solid rgb(255, 255, 255);
+	border-bottom: 2px solid rgb(255, 255, 255);
+	font-size: clamp(4rem, 5vw, 8rem);
+	appearance: none;
+}
+
+.cell:hover {
+	background-color: hsl(0, 0%, 25%);
+}
+
+.no-b {
+	border-bottom: none;
+}
+
+.no-r {
+	border-right: none;
 }
