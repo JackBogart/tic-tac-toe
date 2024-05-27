@@ -1,80 +1,125 @@
+:root {
+    --primary-purple: hsl(271, 81%, 56%);
+    --secondary-purple: hsl(271, 81%, 66%);
+}
 body {
-	background-color: hsl(0, 0%, 9%);
-	color: white;
-	font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-		'Segoe UI Symbol';
+    background-color: hsl(0, 0%, 9%);
+    color: white;
+    font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol';
 }
 
 h1 {
-	background-color: #9333ea;
-	margin: 0px;
-	text-align: center;
-	font-size: 4rem;
-	padding: 20px 0px;
+    background-color: var(--primary-purple);
+    margin: 0px;
+    text-align: center;
+    font-size: 4rem;
+    padding: 20px 0px;
 }
 
 .content {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-info {
+    display: flex;
+    align-items: center;
+    gap: clamp(50px, 10vw, 100px);
+    font-size: 1.5rem;
 }
 
 .game-state {
-	font-size: 2rem;
+    width: 300px;
+    text-align: center;
+}
+
+input {
+    text-align: center;
+    background-color: transparent;
+    color: white;
+    border: none;
+    appearance: none;
+    border-radius: 3px;
+}
+
+input:hover,
+input:focus {
+    background-color: hsl(0, 0%, 15%);
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 1px white solid;
 }
 
 .board {
-	display: grid;
-	height: clamp(300px, 40vw, 700px);
-	width: clamp(300px, 40vw, 700px);
-	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-	border: 2px solid rgb(255, 255, 255);
-	background-color: hsl(0, 0%, 15%);
-	border-radius: 20px;
+    display: grid;
+    height: clamp(300px, 50vw, 600px);
+    width: clamp(300px, 50vw, 600px);
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    border: 2px solid rgb(255, 255, 255);
+    background-color: hsl(0, 0%, 15%);
+    border-radius: 20px;
 }
 
 .cell {
-	color: white;
-	border: none;
-	background-color: transparent;
-	border-right: 2px solid rgb(255, 255, 255);
-	border-bottom: 2px solid rgb(255, 255, 255);
-	font-size: clamp(4rem, 5vw, 8rem);
-	appearance: none;
+    color: white;
+    border: none;
+    background-color: transparent;
+    border-right: 2px solid rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(255, 255, 255);
+    font-size: clamp(4rem, 5vw, 8rem);
+    appearance: none;
 }
 
-.cell:hover {
-	background-color: hsl(0, 0%, 25%);
+.cell:hover:not(:active) {
+    background-color: hsl(0, 0%, 25%);
 }
 
 .left {
-	border-left: none;
+    border-left: none;
 }
 
 .top {
-	border-top: none;
+    border-top: none;
 }
 
 .bottom {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 .right {
-	border-right: none;
+    border-right: none;
 }
 
 .bottom.left {
-	border-radius: 0px 0px 0px 20px;
+    border-radius: 0px 0px 0px 20px;
 }
 
 .bottom.right {
-	border-radius: 0px 0px 20px 0px;
+    border-radius: 0px 0px 20px 0px;
 }
 
 .top.right {
-	border-radius: 0px 20px 0px 0px;
+    border-radius: 0px 20px 0px 0px;
 }
 
 .top.left {
-	border-radius: 20px 0px 0px 0px;
+    border-radius: 20px 0px 0px 0px;
+}
+
+.restart {
+    background-color: var(--primary-purple);
+    border: none;
+    color: white;
+    margin-top: 30px;
+    padding: 20px 100px;
+    font-size: 2rem;
+    border-radius: 10px;
+}
+
+.restart:hover:not(:active) {
+    background-color: var(--secondary-purple);
 }
