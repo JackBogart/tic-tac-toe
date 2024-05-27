@@ -38,6 +38,9 @@ const gameController = (function () {
         if (checkForWin()) {
             isOver = true;
             console.log(`${currentPlayer.getMarker()} has won`);
+        } else if (isATie()) {
+            isOver = true;
+            console.log(`No moves remaining, tie!`);
         } else {
             currentPlayer = currentPlayer === player1 ? player2 : player1;
         }
@@ -53,6 +56,16 @@ const gameController = (function () {
             }
         }
         return false;
+    };
+
+    const isATie = () => {
+        board = gameBoard.getBoard();
+
+        for (let i = 0; i < 9; i++) {
+            if (board[i] === '') return false;
+        }
+
+        return true;
     };
 
     return { selectCell, getCurrentPlayer };
