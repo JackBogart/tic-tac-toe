@@ -7,8 +7,14 @@ const gameBoard = (function () {
 })();
 
 function createPlayer(marker) {
+    let name = 'Player ' + marker;
+
     const getMarker = () => marker;
-    return { getMarker };
+    const getName = () => name;
+    const setName = (new_name) => {
+        name = new_name;
+    };
+    return { getMarker, getName, setName };
 }
 
 const gameController = (function () {
@@ -16,7 +22,6 @@ const gameController = (function () {
     const player2 = createPlayer('O');
     let isOver = false;
     let currentPlayer = player1;
-    let result = '';
 
     const winStates = [
         [0, 1, 2],
@@ -29,7 +34,14 @@ const gameController = (function () {
         [2, 4, 6],
     ];
 
-    const getCurrentPlayer = () => currentPlayer.getMarker();
+    const getCurrentPlayer = () => currentPlayer.getName();
+    const setPlayerName = (name, index) => {
+        if (index == 1) {
+            player1.setName(name);
+        } else {
+            player2.setName(name);
+        }
+    };
 
     const selectCell = (index) => {
         if (isOver) return; // Current game has finished
@@ -38,12 +50,8 @@ const gameController = (function () {
 
         if (checkForWin()) {
             isOver = true;
-            console.log(`Player ${currentPlayer.getMarker()} has won!`);
-            result = `Player ${currentPlayer.getMarker()} has won!`;
         } else if (isATie()) {
             isOver = true;
-            console.log(`It's a draw!`);
-            result = `It's a draw!`;
         } else {
             currentPlayer = currentPlayer === player1 ? player2 : player1;
         }
@@ -69,30 +77,45 @@ const gameController = (function () {
     };
 
     const isGameOver = () => isOver;
-    const getResult = () => result;
+    const getResult = () => {
+        if (checkForWin()) {
+            return `${getCurrentPlayer()} has won!`;
+        } else if (isATie()) {
+            return `It's a draw!`;
+        } else {
+            return `${getCurrentPlayer()}'s Turn!`;
+        }
+    };
 
-    return { selectCell, getCurrentPlayer, isGameOver, getResult };
+    return { selectCell, getCurrentPlayer, isGameOver, getResult, setPlayerName };
 })();
 
 const displayController = (function () {
     const cells = document.querySelectorAll('.cell');
     const gameState = document.querySelector('.game-state');
+    const restart = document.querySelector('.restart');
+    const players = document.querySelectorAll('.player');
 
     const updateBoard = () => {
         for (const [index, cell] of cells.entries()) {
             cell.textContent = gameBoard.getCell(index);
         }
-        if (gameController.isGameOver()) {
-            gameState.textContent = gameController.getResult();
-        } else {
-            gameState.textContent = `Player ${gameController.getCurrentPlayer()}'s Turn!`;
-        }
+        gameState.textContent = gameController.getResult();
     };
 
     cells.forEach((cell) => {
         cell.addEventListener('click', () => {
             gameController.selectCell(cell.dataset.index);
             updateBoard();
+        });
+    });
+
+    players.forEach((input) => {
+        input.addEventListener('input', () => {
+            gameController.setPlayerName(input.value, input.dataset.index);
+            if (input.value == gameController.getCurrentPlayer()) {
+                gameState.textContent = gameController.getResult();
+            }
         });
     });
 })();
